@@ -1,0 +1,1366 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hô Hấp & Sự Sống - Giáo Dục Sinh Học</title>
+    <!-- Tải Tailwind CSS để định dạng giao diện hiện đại, đáp ứng mọi thiết bị -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Tải Font chữ Inter hỗ trợ tiếng Việt sắc nét -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        air: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                        },
+                        leaf: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            200: '#bbf7d0',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            700: '#15803d',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Hiệu ứng chuyển động mượt mà cho vòng tròn tập hít thở */
+        #breathing-circle {
+            transition: transform 4s cubic-bezier(0.4, 0, 0.2, 1), background-color 1s ease, box-shadow 1s ease;
+        }
+        
+        /* Hiệu ứng sóng lan tỏa nhẹ nhàng ở phần Hero */
+        @keyframes floatSlow {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        .animate-float {
+            animation: floatSlow 5s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased selection:bg-air-200 selection:text-air-900">
+
+    <!-- ==================== THANH ĐIỀU HƯỚNG (NAVBAR) ==================== -->
+    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200/80 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo & Tên trang web -->
+                <a href="#" class="flex items-center space-x-2.5 group">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-air-500 to-leaf-500 flex items-center justify-center text-white shadow-md group-hover:scale-105 transition-transform">
+                        <!-- SVG Biểu tượng Lá & Phổi cách điệu -->
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v18m0-14c-3.5 0-6 2.5-6 6.5S8.5 19 11 19m1-12c3.5 0 6 2.5 6 6.5S15.5 19 13 19M9 11c1.5 0 3 1 3 2.5m3-2.5c-1.5 0-3 1-3 2.5"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <span class="font-extrabold text-lg sm:text-xl bg-gradient-to-r from-air-700 to-leaf-600 bg-clip-text text-transparent">
+                            Hô Hấp & Sự Sống
+                        </span>
+                        <span class="hidden sm:block text-[11px] font-medium text-slate-500 -mt-1">Cổng Kiến Thức Sinh Học</span>
+                    </div>
+                </a>
+
+                <!-- Menu Desktop -->
+                <nav class="hidden md:flex items-center space-x-1 lg:space-x-2">
+                    <a href="#thuc-vat" class="px-3.5 py-2 rounded-lg text-sm font-medium text-slate-600 hover:text-leaf-700 hover:bg-leaf-50 transition-colors">
+                        🌿 Thực Vật
+                    </a>
+                    <a href="#dong-vat" class="px-3.5 py-2 rounded-lg text-sm font-medium text-slate-600 hover:text-air-700 hover:bg-air-50 transition-colors">
+                        🐾 Động Vật
+                    </a>
+                    <a href="#con-nguoi" class="px-3.5 py-2 rounded-lg text-sm font-medium text-slate-600 hover:text-teal-700 hover:bg-teal-50 transition-colors">
+                        🏃 Thể Thao & Người
+                    </a>
+                    <a href="#tuong-tac" class="ml-2 px-4 py-2 rounded-xl text-sm font-semibold text-white bg-gradient-to-r from-air-600 to-leaf-600 hover:from-air-700 hover:to-leaf-700 shadow-sm transition-all">
+                        Góc Tương Tác
+                    </a>
+                </nav>
+
+                <!-- Nút Menu Mobile -->
+                <button id="mobile-menu-btn" aria-label="Mở menu" class="md:hidden p-2.5 rounded-xl text-slate-600 hover:bg-slate-100 focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path id="menu-icon-open" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        <path id="menu-icon-close" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Dropdown Menu Mobile -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-b border-slate-200 px-4 pt-2 pb-4 space-y-1.5 shadow-lg">
+            <a href="#thuc-vat" class="mobile-link block px-4 py-2.5 rounded-xl text-base font-medium text-slate-700 hover:bg-leaf-50 hover:text-leaf-700">🌿 Bệnh lý hô hấp Thực vật</a>
+            <a href="#dong-vat" class="mobile-link block px-4 py-2.5 rounded-xl text-base font-medium text-slate-700 hover:bg-air-50 hover:text-air-700">🐾 Bệnh lý hô hấp Động vật</a>
+            <a href="#con-nguoi" class="mobile-link block px-4 py-2.5 rounded-xl text-base font-medium text-slate-700 hover:bg-teal-50 hover:text-teal-700">🏃 Thể thao & Hô hấp ở Người</a>
+            <a href="#tuong-tac" class="mobile-link block px-4 py-2.5 rounded-xl text-base font-semibold text-center text-white bg-gradient-to-r from-air-600 to-leaf-600 mt-2">✨ Mô Phỏng Phổi & Quiz</a>
+        </div>
+    </header>
+
+    <!-- ==================== BANNER GIỚI THIỆU (HERO SECTION) ==================== -->
+    <section class="relative overflow-hidden bg-gradient-to-br from-air-50 via-white to-leaf-50 border-b border-slate-200/60">
+        <!-- Họa tiết nền trang trí -->
+        <div class="absolute top-0 left-0 w-72 h-72 bg-air-200/40 rounded-full mix-blend-multiply filter blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
+        <div class="absolute bottom-0 right-0 w-96 h-96 bg-leaf-200/40 rounded-full mix-blend-multiply filter blur-3xl translate-x-1/3 translate-y-1/3"></div>
+
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20 lg:py-24">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+                <div class="lg:col-span-7 text-center lg:text-left">
+                    <span class="inline-flex items-center px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-semibold bg-air-100 text-air-700 mb-5">
+                        🌱 Chuyên Đề Sinh Học & Sức Khỏe Cộng Đồng
+                    </span>
+                    <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight mb-5">
+                        Khám Phá Nhịp Thở Của <span class="text-leaf-600">Tự Nhiên</span> & <span class="text-air-600">Sự Sống</span>
+                    </h1>
+                    <p class="text-base sm:text-lg text-slate-600 leading-relaxed mb-8 max-w-2xl mx-auto lg:mx-0">
+                        Từ những lỗ khí khổng li ti trên phiến lá, hệ hô hấp nhạy cảm của muôn loài động vật cho đến lá phổi khỏe mạnh của con người khi rèn luyện thể thao — cùng tìm hiểu cách bảo vệ hơi thở của vạn vật.
+                    </p>
+                    <div class="flex flex-col sm:flex-row justify-center lg:justify-start gap-3.5">
+                        <a href="#thuc-vat" class="px-6 py-3.5 rounded-xl font-semibold text-white bg-air-600 hover:bg-air-700 shadow-md hover:shadow-lg transition-all text-center">
+                            Bắt Đầu Khám Phá
+                        </a>
+                        <a href="#lung-simulator" class="px-6 py-3.5 rounded-xl font-semibold text-leaf-700 bg-leaf-100 hover:bg-leaf-200 transition-all text-center">
+                            🫁 Mô Phỏng Lá Phổi Sống
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Hình minh họa SVG tổng quan hệ sinh thái hô hấp -->
+                <div class="lg:col-span-5 flex justify-center">
+                    <div class="relative w-full max-w-md bg-white/80 backdrop-blur-sm p-6 rounded-3xl border border-slate-200/80 shadow-xl animate-float">
+                        <svg viewBox="0 0 400 300" class="w-full h-auto" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Vòng tuần hoàn O2 và CO2 -->
+                            <circle cx="200" cy="150" r="115" stroke="#bae6fd" stroke-width="3" stroke-dasharray="8 8"/>
+                            <circle cx="200" cy="150" r="85" stroke="#bbf7d0" stroke-width="2"/>
+                            
+                            <!-- Biểu tượng Thực vật (Góc trái trên) -->
+                            <g transform="translate(65, 45)">
+                                <circle cx="35" cy="35" r="35" fill="#dcfce7"/>
+                                <path d="M35 52V24M35 38C25 38 20 28 24 18C32 20 35 28 35 38ZM35 32C45 32 50 22 46 12C38 14 35 22 35 32Z" stroke="#16a34a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                                <text x="35" y="85" text-anchor="middle" fill="#15803d" font-size="13" font-weight="bold">Thực Vật</text>
+                            </g>
+
+                            <!-- Biểu tượng Động vật (Góc phải trên) -->
+                            <g transform="translate(265, 45)">
+                                <circle cx="35" cy="35" r="35" fill="#e0f2fe"/>
+                                <path d="M23 42C23 34 29 29 35 29C41 29 47 34 47 42C47 46 43 49 35 49C27 49 23 46 23 42Z" stroke="#0284c7" stroke-width="2.5"/>
+                                <circle cx="24" cy="24" r="4" fill="#0284c7"/>
+                                <circle cx="35" cy="20" r="4.5" fill="#0284c7"/>
+                                <circle cx="46" cy="24" r="4" fill="#0284c7"/>
+                                <text x="35" y="85" text-anchor="middle" fill="#0369a1" font-size="13" font-weight="bold">Động Vật</text>
+                            </g>
+
+                            <!-- Biểu tượng Con người & Thể thao (Phía dưới giữa) -->
+                            <g transform="translate(165, 195)">
+                                <circle cx="35" cy="35" r="38" fill="#ccfbf1"/>
+                                <!-- Lá phổi cách điệu -->
+                                <path d="M35 16V32M35 26C28 26 21 31 21 41C21 47 25 50 30 50C33 50 34 48 34 44V26M35 26C42 26 49 31 49 41C49 47 45 50 40 50C37 50 36 48 36 44V26" stroke="#0d9488" stroke-width="2.8" stroke-linecap="round"/>
+                                <text x="35" y="88" text-anchor="middle" fill="#0f766e" font-size="13" font-weight="bold">Con Người</text>
+                            </g>
+
+                            <!-- Trung tâm O2 / CO2 -->
+                            <rect x="155" y="128" width="90" height="44" rx="22" fill="url(#gradCenter)"/>
+                            <text x="200" y="155" text-anchor="middle" fill="white" font-size="15" font-weight="800">O₂ ⇄ CO₂</text>
+                            <defs>
+                                <linearGradient id="gradCenter" x1="155" y1="128" x2="245" y2="172" gradientUnits="userSpaceOnUse">
+                                    <stop stop-color="#0284c7"/>
+                                    <stop offset="1" stop-color="#16a34a"/>
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== NỘI DUNG CHÍNH ==================== -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 space-y-24 sm:space-y-32">
+
+        <!-- ==================== MỤC 1: BỆNH LÝ & RỐI LOẠN HÔ HẤP Ở THỰC VẬT ==================== -->
+        <section id="thuc-vat" class="scroll-mt-24">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4 border-b border-leaf-200 pb-6">
+                <div>
+                    <div class="inline-flex items-center space-x-2 text-leaf-600 font-bold text-sm uppercase tracking-wider mb-2">
+                        <span class="w-2.5 h-2.5 rounded-full bg-leaf-500"></span>
+                        <span>Chuyên Mục 01 • Giới Thực Vật</span>
+                    </div>
+                    <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900">
+                        Bệnh Lý & Rối Loạn Hô Hấp Ở Thực Vật
+                    </h2>
+                </div>
+                <p class="text-slate-600 max-w-md text-sm sm:text-base">
+                    Thực vật trao đổi khí qua khí khổng (ở lá), bì khổng (ở thân gỗ) và lông hút (ở rễ). Khi các cửa ngõ này bị tổn thương, cây sẽ suy kiệt nhanh chóng.
+                </p>
+            </div>
+
+            <!-- Khung giải thích cơ chế trao đổi khí -->
+            <div class="bg-gradient-to-r from-leaf-50 to-emerald-50 border border-leaf-200 rounded-3xl p-6 sm:p-8 mb-10 shadow-sm">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+                    <div class="lg:col-span-8 space-y-3">
+                        <h3 class="text-xl font-bold text-leaf-800 flex items-center gap-2">
+                            <span>🔬 Cơ Chế Hô Hấp Tế Bào & Trao Đổi Khí</span>
+                        </h3>
+                        <p class="text-slate-700 leading-relaxed text-sm sm:text-base">
+                            Hô hấp diễn ra ở mọi cơ quan sống của cây suốt ngày đêm: hấp thụ <strong>O₂</strong> phân giải chất hữu cơ tạo năng lượng (<strong>ATP</strong>) và thải ra <strong>CO₂ + H₂O</strong>.
+                        </p>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5 pt-2">
+                            <div class="bg-white/95 p-4 rounded-2xl border border-leaf-100">
+                                <span class="font-bold text-leaf-700 block mb-1 text-sm">1. Khí Khổng (Lá non):</span>
+                                <span class="text-xs text-slate-600 leading-relaxed block">Hai tế bào hình hạt đậu đóng/mở điều tiết lượng O₂ khuếch tán vào khoảng gian bào.</span>
+                            </div>
+                            <div class="bg-white/95 p-4 rounded-2xl border border-leaf-100">
+                                <span class="font-bold text-leaf-700 block mb-1 text-sm">2. Bì Khổng (Thân gỗ):</span>
+                                <span class="text-xs text-slate-600 leading-relaxed block">Các lỗ xốp trên lớp vỏ bần giúp không khí thấm sâu vào mô mềm bên trong thân cây.</span>
+                            </div>
+                            <div class="bg-white/95 p-4 rounded-2xl border border-leaf-100">
+                                <span class="font-bold text-leaf-700 block mb-1 text-sm">3. Lông Hút (Hệ rễ):</span>
+                                <span class="text-xs text-slate-600 leading-relaxed block">Hấp thụ O₂ hòa tan trong các khe đất tơi xốp để tạo năng lượng hút nước và khoáng.</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Minh họa SVG Khí khổng -->
+                    <div class="lg:col-span-4 flex justify-center">
+                        <div class="bg-white p-4 rounded-2xl border border-leaf-200 shadow-inner text-center w-full max-w-xs">
+                            <svg viewBox="0 0 220 135" class="w-48 h-28 mx-auto" fill="none">
+                                <path d="M110 18C72 18 55 45 55 67C55 89 72 116 110 116C94 100 90 83 90 67C90 51 94 34 110 18Z" fill="#4ade80" stroke="#15803d" stroke-width="2.5"/>
+                                <path d="M110 18C148 18 165 45 165 67C165 89 148 116 110 116C126 100 130 83 130 67C130 51 126 34 110 18Z" fill="#4ade80" stroke="#15803d" stroke-width="2.5"/>
+                                <ellipse cx="110" cy="67" rx="11" ry="34" fill="#064e3b"/>
+                                <path d="M22 55H96" stroke="#0284c7" stroke-width="2.5" stroke-linecap="round"/>
+                                <path d="M90 50L97 55L90 60" stroke="#0284c7" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <text x="16" y="46" fill="#0284c7" font-size="11" font-weight="bold">O₂ vào</text>
+                                <path d="M124 79H198" stroke="#ea580c" stroke-width="2.5" stroke-linecap="round"/>
+                                <path d="M192 74L199 79L192 84" stroke="#ea580c" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <text x="155" y="96" fill="#ea580c" font-size="11" font-weight="bold">CO₂ ra</text>
+                            </svg>
+                            <p class="text-xs font-semibold text-slate-600 mt-1">Cấu tạo Khí Khổng đang mở</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5 Thẻ bệnh & rối loạn hô hấp ở thực vật kèm hình minh họa SVG riêng -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                
+                <!-- Bệnh TV 1: Ngập úng rễ -->
+                <article class="bg-white rounded-3xl overflow-hidden border border-slate-200/80 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all flex flex-col">
+                    <!-- Hình minh họa SVG -->
+                    <div class="bg-gradient-to-b from-sky-50 to-blue-100/70 p-4 border-b border-blue-100">
+                        <svg viewBox="0 0 280 120" class="w-full h-28 mx-auto" fill="none">
+                            <!-- Mặt nước ngập úng -->
+                            <rect x="20" y="45" width="240" height="65" rx="10" fill="#bae6fd"/>
+                            <path d="M20 45Q50 38 80 45T140 45T200 45T260 45" stroke="#0284c7" stroke-width="2.5"/>
+                            <!-- Thân cây héo -->
+                            <path d="M140 55V18" stroke="#65a30d" stroke-width="5" stroke-linecap="round"/>
+                            <path d="M140 28C125 25 118 35 122 42" stroke="#eab308" stroke-width="3.5" stroke-linecap="round"/>
+                            <path d="M140 24C155 22 162 32 158 40" stroke="#eab308" stroke-width="3.5" stroke-linecap="round"/>
+                            <!-- Hệ rễ bị thối đen dưới nước -->
+                            <path d="M140 55C130 70 115 80 105 95M140 55C140 75 138 88 142 100M140 55C152 72 168 82 175 95" stroke="#78350f" stroke-width="3" stroke-linecap="round"/>
+                            <!-- Bọt khí độc Ethanol/CO2 -->
+                            <circle cx="115" cy="75" r="4" fill="#f97316"/>
+                            <circle cx="162" cy="70" r="3.5" fill="#f97316"/>
+                            <text x="32" y="65" fill="#0369a1" font-size="10" font-weight="bold">Nước lấp kín khe đất</text>
+                            <text x="168" y="88" fill="#c2410c" font-size="10" font-weight="bold">Độc tố Ethanol</text>
+                        </svg>
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between gap-2 mb-2">
+                                <span class="px-2.5 py-1 rounded-lg text-xs font-bold bg-blue-50 text-blue-700">Thiếu Oxy Đất</span>
+                                <span class="text-xs font-semibold text-orange-600">⚠️ Hô hấp kỵ khí</span>
+                            </div>
+                            <h3 class="text-lg font-extrabold text-slate-900 mb-2">1. Bệnh Ngập Úng Rễ</h3>
+                            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed mb-4">
+                                Nước ngập lâu ngày đẩy hết không khí ra khỏi đất. Rễ thiếu O₂ buộc phải chuyển sang <strong>hô hấp kỵ khí</strong>, tạo ra rất ít ATP và tích tụ độc tố (rượu ethanol, axit lactic).
+                            </p>
+                        </div>
+                        <ul class="space-y-1.5 text-xs text-slate-700 border-t border-slate-100 pt-3">
+                            <li><strong class="text-red-600">Biểu hiện:</strong> Lông hút bị thối đen, cây không hút được nước dẫn tới héo rũ, vàng lá và chết úng.</li>
+                            <li><strong class="text-leaf-700">Khắc phục:</strong> Đào rãnh thoát nước ngay, xới phá váng bề mặt đất để tăng độ thoáng khí.</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <!-- Bệnh TV 2: Nấm phấn trắng & nấm bồ hóng -->
+                <article class="bg-white rounded-3xl overflow-hidden border border-slate-200/80 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all flex flex-col">
+                    <div class="bg-gradient-to-b from-amber-50 to-orange-100/60 p-4 border-b border-amber-100">
+                        <svg viewBox="0 0 280 120" class="w-full h-28 mx-auto" fill="none">
+                            <!-- Phiến lá xanh -->
+                            <path d="M55 75C55 38 110 20 220 25C205 78 155 102 85 95C68 92 55 85 55 75Z" fill="#4ade80" stroke="#15803d" stroke-width="2.5"/>
+                            <path d="M62 78C115 62 165 48 212 28" stroke="#15803d" stroke-width="2"/>
+                            <!-- Mảng nấm phấn trắng bít kín khí khổng -->
+                            <ellipse cx="125" cy="58" rx="26" ry="14" fill="#f8fafc" fill-opacity="0.92" stroke="#cbd5e1" stroke-width="1.5" stroke-dasharray="3 2"/>
+                            <ellipse cx="168" cy="46" rx="20" ry="11" fill="#f8fafc" fill-opacity="0.92" stroke="#cbd5e1" stroke-width="1.5" stroke-dasharray="3 2"/>
+                            <!-- Mũi tên O2 bị chặn lại -->
+                            <path d="M125 22V40" stroke="#ef4444" stroke-width="2.5" stroke-linecap="round"/>
+                            <path d="M119 36L131 44M131 36L119 44" stroke="#ef4444" stroke-width="2.5" stroke-linecap="round"/>
+                            <text x="138" y="25" fill="#dc2626" font-size="10" font-weight="bold">Tơ nấm bít khí khổng</text>
+                        </svg>
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between gap-2 mb-2">
+                                <span class="px-2.5 py-1 rounded-lg text-xs font-bold bg-amber-50 text-amber-700">Nấm Ký Sinh</span>
+                                <span class="text-xs font-semibold text-orange-600">⚠️ Bít tắc bề mặt</span>
+                            </div>
+                            <h3 class="text-lg font-extrabold text-slate-900 mb-2">2. Bệnh Nấm Phấn Trắng & Bồ Hóng</h3>
+                            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed mb-4">
+                                Các sợi nấm (<em>Erysiphe</em>, nấm bồ hóng) đan xen thành lớp màng dày đặc trên biểu bì lá, chèn ép và bịt kín các lỗ khí khổng.
+                            </p>
+                        </div>
+                        <ul class="space-y-1.5 text-xs text-slate-700 border-t border-slate-100 pt-3">
+                            <li><strong class="text-red-600">Biểu hiện:</strong> Mặt lá phủ lớp bột trắng hoặc muội đen, lá xoăn lại, ngừng trao đổi khí và rụng sớm.</li>
+                            <li><strong class="text-leaf-700">Khắc phục:</strong> Cắt tỉa cành rậm rạp, tiêu hủy lá bệnh và phun chế phẩm sinh học <em>Trichoderma</em> / lưu huỳnh.</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <!-- Bệnh TV 3: Bệnh gỉ sắt trên lá -->
+                <article class="bg-white rounded-3xl overflow-hidden border border-slate-200/80 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all flex flex-col">
+                    <div class="bg-gradient-to-b from-orange-50 to-red-100/60 p-4 border-b border-orange-100">
+                        <svg viewBox="0 0 280 120" class="w-full h-28 mx-auto" fill="none">
+                            <!-- Mặt cắt tế bào biểu bì lá -->
+                            <rect x="30" y="35" width="220" height="55" rx="12" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+                            <!-- Các ổ bào tử gỉ sắt màu nâu đỏ phá vỡ biểu bì -->
+                            <circle cx="85" cy="52" r="11" fill="#c2410c"/>
+                            <circle cx="85" cy="52" r="5" fill="#fb923c"/>
+                            <circle cx="145" cy="64" r="13" fill="#9a3412"/>
+                            <circle cx="145" cy="64" r="6" fill="#fdba74"/>
+                            <circle cx="200" cy="48" r="10" fill="#c2410c"/>
+                            <!-- Chú thích -->
+                            <text x="52" y="25" fill="#9a3412" font-size="10" font-weight="bold">Ổ bào tử nấm làm rách biểu bì & hỏng khí khổng</text>
+                            <text x="72" y="105" fill="#15803d" font-size="10" font-weight="bold">Mô giậu bị hoại tử, mất nước</text>
+                        </svg>
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between gap-2 mb-2">
+                                <span class="px-2.5 py-1 rounded-lg text-xs font-bold bg-orange-50 text-orange-700">Phá Hủy Mô Lá</span>
+                                <span class="text-xs font-semibold text-orange-600">⚠️ Rối loạn đóng mở</span>
+                            </div>
+                            <h3 class="text-lg font-extrabold text-slate-900 mb-2">3. Bệnh Gỉ Sắt Trên Lá</h3>
+                            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed mb-4">
+                                Nấm gỉ sắt (<em>Puccinia</em>) xâm nhập qua khí khổng, phát triển thành các ổ bào tử màu nâu đỏ làm rách lớp biểu bì và biến dạng tế bào bảo vệ khí khổng.
+                            </p>
+                        </div>
+                        <ul class="space-y-1.5 text-xs text-slate-700 border-t border-slate-100 pt-3">
+                            <li><strong class="text-red-600">Biểu hiện:</strong> Mặt dưới lá nổi nhiều mụn nhỏ màu gỉ sắt, khí khổng mất khả năng đóng khiến cây mất nước và rối loạn hô hấp.</li>
+                            <li><strong class="text-leaf-700">Khắc phục:</strong> Bón phân cân đối (tăng Kali), không tưới phun mưa vào chiều tối.</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <!-- Bệnh TV 4: Tắc nghẽn do bụi mịn PM2.5 -->
+                <article class="bg-white rounded-3xl overflow-hidden border border-slate-200/80 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all flex flex-col">
+                    <div class="bg-gradient-to-b from-slate-100 to-slate-200/70 p-4 border-b border-slate-200">
+                        <svg viewBox="0 0 280 120" class="w-full h-28 mx-auto" fill="none">
+                            <!-- Khí khổng phóng đại -->
+                            <path d="M140 25C105 25 90 48 90 65C90 82 105 105 140 105C125 90 122 77 122 65C122 53 125 40 140 25Z" fill="#86efac" stroke="#16a34a" stroke-width="2"/>
+                            <path d="M140 25C175 25 190 48 190 65C190 82 175 105 140 105C155 90 158 77 158 65C158 53 155 40 140 25Z" fill="#86efac" stroke="#16a34a" stroke-width="2"/>
+                            <!-- Các hạt bụi mịn PM2.5 kẹt chặt trong khe khí khổng -->
+                            <circle cx="140" cy="52" r="6" fill="#475569"/>
+                            <circle cx="136" cy="66" r="7" fill="#334155"/>
+                            <circle cx="144" cy="78" r="5.5" fill="#475569"/>
+                            <circle cx="115" cy="45" r="4" fill="#64748b"/>
+                            <circle cx="168" cy="80" r="4.5" fill="#64748b"/>
+                            <text x="25" y="38" fill="#334155" font-size="10" font-weight="bold">Bụi mịn PM2.5</text>
+                            <text x="195" y="55" fill="#dc2626" font-size="10" font-weight="bold">Kẹt kín khe thở</text>
+                        </svg>
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between gap-2 mb-2">
+                                <span class="px-2.5 py-1 rounded-lg text-xs font-bold bg-slate-200 text-slate-700">Ô Nhiễm Đô Thị</span>
+                                <span class="text-xs font-semibold text-orange-600">⚠️ Ngạt khí cơ học</span>
+                            </div>
+                            <h3 class="text-lg font-extrabold text-slate-900 mb-2">4. Tắc Nghẽn Khí Khổng Do Bụi Mịn</h3>
+                            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed mb-4">
+                                Bụi mịn PM2.5, bụi xi măng và khí độc SO₂ bám dày trên mặt lá, lọt vào khe khí khổng gây tắc nghẽn cơ học và ăn mòn tế bào hạt đậu.
+                            </p>
+                        </div>
+                        <ul class="space-y-1.5 text-xs text-slate-700 border-t border-slate-100 pt-3">
+                            <li><strong class="text-red-600">Biểu hiện:</strong> Lá xỉn màu, cháy mép lá do axit từ SO₂, cây sinh trưởng chậm, còi cọc.</li>
+                            <li><strong class="text-leaf-700">Khắc phục:</strong> Phun sương rửa lá định kỳ cho cây trồng ven đường và tăng mật độ cây xanh lọc bụi.</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <!-- Bệnh TV 5: Bệnh thối nhũn vi khuẩn trên củ/quả bảo quản -->
+                <article class="bg-white rounded-3xl overflow-hidden border border-slate-200/80 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all flex flex-col md:col-span-2 lg:col-span-2">
+                    <div class="grid grid-cols-1 sm:grid-cols-12 h-full">
+                        <div class="sm:col-span-5 bg-gradient-to-br from-rose-50 to-amber-100/70 p-4 flex items-center justify-center border-b sm:border-b-0 sm:border-r border-amber-100">
+                            <svg viewBox="0 0 220 140" class="w-full max-w-[210px] h-32" fill="none">
+                                <!-- Củ khoai tây / nông sản bảo quản -->
+                                <ellipse cx="110" cy="78" rx="72" ry="42" fill="#eab308" stroke="#a16207" stroke-width="2.5"/>
+                                <!-- Vùng mô bị vi khuẩn phân hủy thối nhũn -->
+                                <path d="M115 45C145 45 170 62 168 85C165 102 135 110 112 102C98 96 95 65 115 45Z" fill="#78350f" fill-opacity="0.85"/>
+                                <!-- Sóng nhiệt bốc lên do hô hấp tăng đột biến -->
+                                <path d="M125 35C120 25 132 20 127 10" stroke="#ef4444" stroke-width="2.5" stroke-linecap="round"/>
+                                <path d="M145 38C140 28 152 23 147 13" stroke="#ef4444" stroke-width="2.5" stroke-linecap="round"/>
+                                <text x="20" y="24" fill="#dc2626" font-size="11" font-weight="bold">🔥 Tăng nhiệt độ bất thường</text>
+                                <text x="112" y="82" fill="#fef08a" font-size="10" font-weight="bold">Mô thối nhũn</text>
+                            </svg>
+                        </div>
+                        <div class="sm:col-span-7 p-6 flex flex-col justify-between">
+                            <div>
+                                <div class="flex items-center justify-between gap-2 mb-2">
+                                    <span class="px-2.5 py-1 rounded-lg text-xs font-bold bg-rose-50 text-rose-700">Nông Sản Bảo Quản</span>
+                                    <span class="text-xs font-semibold text-orange-600">⚠️ Hô hấp đột biến</span>
+                                </div>
+                                <h3 class="text-lg font-extrabold text-slate-900 mb-2">5. Bệnh Thối Nhũn Vi Khuẩn Trên Củ/Quả</h3>
+                                <p class="text-xs sm:text-sm text-slate-600 leading-relaxed mb-3">
+                                    Vi khuẩn <em>Erwinia carotovora</em> xâm nhập qua vết xây xát trên củ, quả (khoai tây, bắp cải, cà rốt) trong kho kín ẩm, kích thích <strong>cường độ hô hấp tăng vọt</strong> và tiết enzyme phân hủy vách tế bào.
+                                </p>
+                            </div>
+                            <ul class="space-y-1.5 text-xs text-slate-700 border-t border-slate-100 pt-3">
+                                <li><strong class="text-red-600">Biểu hiện:</strong> Đống nông sản tự bốc nhiệt nóng lên, mô củ mềm nhũn, chảy dịch và có mùi hôi thối đặc trưng.</li>
+                                <li><strong class="text-leaf-700">Khắc phục:</strong> Bảo quản nơi khô ráo, thoáng khí, hạ nhiệt độ kho (4–10°C) để ức chế hô hấp và loại bỏ củ dập nát.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+
+        <!-- ==================== MỤC 2: CÁC BỆNH LÝ ĐƯỜNG HÔ HẤP Ở ĐỘNG VẬT ==================== -->
+        <section id="dong-vat" class="scroll-mt-24">
+            <div class="flex flex-col lg:flex-row lg:items-end justify-between mb-8 gap-4 border-b border-air-200 pb-6">
+                <div>
+                    <div class="inline-flex items-center space-x-2 text-air-600 font-bold text-sm uppercase tracking-wider mb-2">
+                        <span class="w-2.5 h-2.5 rounded-full bg-air-500"></span>
+                        <span>Chuyên Mục 02 • Giới Động Vật</span>
+                    </div>
+                    <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900">
+                        Các Bệnh Lý Đường Hô Hấp Ở Động Vật
+                    </h2>
+                </div>
+                <p class="text-slate-600 max-w-md text-sm sm:text-base">
+                    Động vật có nhiều hình thức hô hấp khác nhau (mang ở cá, phổi và túi khí ở chim, phổi phế nang ở thú) nên bệnh lý cũng mang đặc trưng riêng biệt.
+                </p>
+            </div>
+
+            <!-- Thanh giới thiệu cơ quan hô hấp & Bộ lọc phân nhóm động vật -->
+            <div class="bg-air-50/80 border border-air-200 rounded-3xl p-5 sm:p-6 mb-8 flex flex-col md:flex-row items-center justify-between gap-4">
+                <div class="flex flex-wrap items-center gap-2 text-xs sm:text-sm font-medium text-air-900">
+                    <span class="font-bold text-air-700">🔎 Lọc theo nhóm loài:</span>
+                </div>
+                <div id="animal-filter-buttons" class="flex flex-wrap justify-center gap-2">
+                    <button type="button" data-filter="all" class="animal-filter-btn active px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-air-600 text-white shadow-sm transition-all cursor-pointer">
+                        Tất cả (6 bệnh)
+                    </button>
+                    <button type="button" data-filter="poultry" class="animal-filter-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-white text-slate-700 border border-slate-200 hover:border-air-400 transition-all cursor-pointer">
+                        🐔 Gia cầm (2)
+                    </button>
+                    <button type="button" data-filter="mammal" class="animal-filter-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-white text-slate-700 border border-slate-200 hover:border-air-400 transition-all cursor-pointer">
+                        🐾 Gia súc & Thú cưng (3)
+                    </button>
+                    <button type="button" data-filter="aquatic" class="animal-filter-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-white text-slate-700 border border-slate-200 hover:border-air-400 transition-all cursor-pointer">
+                        🐟 Thủy sản (1)
+                    </button>
+                </div>
+            </div>
+
+            <!-- Lưới 6 bệnh lý hô hấp ở động vật -->
+            <div id="animal-diseases-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
+                
+                <!-- Bệnh ĐV 1: CRD ở Gia cầm -->
+                <article data-category="poultry" class="animal-card bg-white rounded-3xl overflow-hidden border border-slate-200/80 shadow-sm hover:shadow-xl transition-all flex flex-col">
+                    <div class="bg-gradient-to-r from-air-600 to-sky-500 p-5 text-white">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="px-3 py-1 rounded-full bg-white/20 text-xs font-semibold">🐔 Gia Cầm (Gà, Vịt)</span>
+                            <span class="text-xs font-bold bg-orange-500/90 px-2.5 py-0.5 rounded-lg">Vi khuẩn</span>
+                        </div>
+                        <h3 class="text-lg font-extrabold">1. Bệnh Hô Hấp Mãn Tính (CRD)</h3>
+                        <p class="text-air-100 text-xs mt-0.5">Tác nhân: <em>Mycoplasma gallisepticum</em></p>
+                    </div>
+                    <!-- Hình SVG minh họa túi khí gia cầm bị viêm -->
+                    <div class="bg-sky-50/70 px-4 py-3 border-b border-sky-100">
+                        <svg viewBox="0 0 260 95" class="w-full h-24 mx-auto" fill="none">
+                            <!-- Khí quản và 2 túi khí -->
+                            <path d="M130 12V42" stroke="#0284c7" stroke-width="5" stroke-linecap="round"/>
+                            <path d="M130 42L95 55M130 42L165 55" stroke="#0284c7" stroke-width="4" stroke-linecap="round"/>
+                            <ellipse cx="82" cy="65" rx="26" ry="18" fill="#bae6fd" stroke="#0284c7" stroke-width="2"/>
+                            <ellipse cx="178" cy="65" rx="26" ry="18" fill="#fed7aa" stroke="#ea580c" stroke-width="2"/>
+                            <!-- Đốm viêm bã đậu trong túi khí -->
+                            <circle cx="172" cy="62" r="4" fill="#ea580c"/>
+                            <circle cx="185" cy="68" r="5" fill="#ea580c"/>
+                            <text x="48" y="90" fill="#0369a1" font-size="9.5" font-weight="bold">Túi khí lành</text>
+                            <text x="142" y="90" fill="#c2410c" font-size="9.5" font-weight="bold">Túi khí đục, viêm bã đậu</text>
+                        </svg>
+                    </div>
+                    <div class="p-6 space-y-3 flex-1 flex flex-col justify-between text-xs sm:text-sm">
+                        <div class="space-y-2.5">
+                            <p class="text-slate-600"><strong class="text-slate-800">🩺 Triệu chứng:</strong> Thở khò khè rõ nhất về đêm, chảy nước mũi, vẩy mỏ, sưng phù đầu mặt, viêm đục túi khí, giảm tỷ lệ đẻ trứng.</p>
+                        </div>
+                        <div class="bg-air-50 p-3.5 rounded-2xl border border-air-100 text-xs">
+                            <strong class="text-air-800">🛡️ Phòng trị:</strong> Giữ chuồng khô thoáng giảm khí NH₃, tiêm vắc-xin định kỳ và dùng kháng sinh đặc trị nhóm Tylosin/Doxycycline theo chỉ định thú y.
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Bệnh ĐV 2: Viêm phế quản truyền nhiễm IB ở gà -->
+                <article data-category="poultry" class="animal-card bg-white rounded-3xl overflow-hidden border border-slate-200/80 shadow-sm hover:shadow-xl transition-all flex flex-col">
+                    <div class="bg-gradient-to-r from-amber-600 to-orange-500 p-5 text-white">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="px-3 py-1 rounded-full bg-white/20 text-xs font-semibold">🐔 Gà Công Nghiệp & Thả Vườn</span>
+                            <span class="text-xs font-bold bg-red-600/90 px-2.5 py-0.5 rounded-lg">Virus lây nhanh</span>
+                        </div>
+                        <h3 class="text-lg font-extrabold">2. Viêm Phế Quản Truyền Nhiễm (IB)</h3>
+                        <p class="text-amber-100 text-xs mt-0.5">Tác nhân: <em>Avian Coronavirus</em></p>
+                    </div>
+                    <!-- Hình SVG khí quản bị xuất huyết và dịch nhầy -->
+                    <div class="bg-amber-50/60 px-4 py-3 border-b border-amber-100">
+                        <svg viewBox="0 0 260 95" class="w-full h-24 mx-auto" fill="none">
+                            <rect x="65" y="25" width="130" height="36" rx="18" fill="#fecaca" stroke="#dc2626" stroke-width="2"/>
+                            <!-- Dịch nhầy bít lòng phế quản -->
+                            <path d="M85 43Q110 32 135 43T180 43" stroke="#eab308" stroke-width="6" stroke-linecap="round"/>
+                            <circle cx="95" cy="34" r="3" fill="#dc2626"/>
+                            <circle cx="155" cy="52" r="3.5" fill="#dc2626"/>
+                            <text x="52" y="78" fill="#b91c1c" font-size="9.5" font-weight="bold">Niêm mạc phế quản sung huyết, nhiều dịch nhầy</text>
+                        </svg>
+                    </div>
+                    <div class="p-6 space-y-3 flex-1 flex flex-col justify-between text-xs sm:text-sm">
+                        <div class="space-y-2.5">
+                            <p class="text-slate-600"><strong class="text-slate-800">🩺 Triệu chứng:</strong> Gà vươn cổ thở ngáp, ho rù, tiếng thở rít; gà đẻ cho trứng vỏ mỏng, sần sùi, biến dạng do virus tấn công cả ống dẫn trứng.</p>
+                        </div>
+                        <div class="bg-amber-50 p-3.5 rounded-2xl border border-amber-100 text-xs">
+                            <strong class="text-amber-900">🛡️ Phòng trị:</strong> Nhỏ mắt/mũi vắc-xin IB cho gà con từ 1–7 ngày tuổi, an toàn sinh học nghiêm ngặt vì bệnh do virus không có thuốc đặc trị.
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Bệnh ĐV 3: Tụ huyết trùng & Viêm phổi dính sườn -->
+                <article data-category="mammal" class="animal-card bg-white rounded-3xl overflow-hidden border border-slate-200/80 shadow-sm hover:shadow-xl transition-all flex flex-col">
+                    <div class="bg-gradient-to-r from-teal-600 to-emerald-600 p-5 text-white">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="px-3 py-1 rounded-full bg-white/20 text-xs font-semibold">🐖 Lợn, Trâu, Bò</span>
+                            <span class="text-xs font-bold bg-orange-500/90 px-2.5 py-0.5 rounded-lg">Cấp tính</span>
+                        </div>
+                        <h3 class="text-lg font-extrabold">3. Viêm Phổi Dính Sườn & Tụ Huyết Trùng</h3>
+                        <p class="text-teal-100 text-xs mt-0.5">Tác nhân: <em>Pasteurella / Actinobacillus</em></p>
+                    </div>
+                    <!-- Hình SVG phổi xuất huyết -->
+                    <div class="bg-teal-50/60 px-4 py-3 border-b border-teal-100">
+                        <svg viewBox="0 0 260 95" class="w-full h-24 mx-auto" fill="none">
+                            <path d="M130 15V35" stroke="#0f766e" stroke-width="4" stroke-linecap="round"/>
+                            <path d="M130 30C110 30 92 42 92 65C92 78 102 82 115 82C123 82 127 76 127 66V30" fill="#99f6e4" stroke="#0d9488" stroke-width="2"/>
+                            <path d="M130 30C150 30 168 42 168 65C168 78 158 82 145 82C137 82 133 76 133 66V30" fill="#fca5a5" stroke="#dc2626" stroke-width="2"/>
+                            <circle cx="150" cy="58" r="6" fill="#b91c1c"/>
+                            <text x="176" y="58" fill="#b91c1c" font-size="9.5" font-weight="bold">Phổi đông đặc,</text>
+                            <text x="176" y="70" fill="#b91c1c" font-size="9.5" font-weight="bold">dính sườn</text>
+                        </svg>
+                    </div>
+                    <div class="p-6 space-y-3 flex-1 flex flex-col justify-between text-xs sm:text-sm">
+                        <div class="space-y-2.5">
+                            <p class="text-slate-600"><strong class="text-slate-800">🩺 Triệu chứng:</strong> Sốt cao 41–42°C, khó thở dữ dội (thở bụng, ngồi như chó ngồi để thở), mũi chảy dịch lẫn bọt máu, niêm mạc tím tái.</p>
+                        </div>
+                        <div class="bg-teal-50 p-3.5 rounded-2xl border border-teal-100 text-xs">
+                            <strong class="text-teal-900">🛡️ Phòng trị:</strong> Tiêm phòng vắc-xin Tụ huyết trùng 6 tháng/lần, tránh để gia súc nhiễm lạnh đột ngột hoặc stress vận chuyển.
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Bệnh ĐV 4: Bệnh cũi chó (Kennel Cough) -->
+                <article data-category="mammal" class="animal-card bg-white rounded-3xl overflow-hidden border border-slate-200/80 shadow-sm hover:shadow-xl transition-all flex flex-col">
+                    <div class="bg-gradient-to-r from-indigo-600 to-blue-600 p-5 text-white">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="px-3 py-1 rounded-full bg-white/20 text-xs font-semibold">🐕 Thú Cưng (Chó)</span>
+                            <span class="text-xs font-bold bg-sky-400/30 px-2.5 py-0.5 rounded-lg">Dễ lây lan</span>
+                        </div>
+                        <h3 class="text-lg font-extrabold">4. Bệnh Cũi Chó (Kennel Cough)</h3>
+                        <p class="text-indigo-100 text-xs mt-0.5">Tác nhân: <em>Bordetella bronchiseptica</em></p>
+                    </div>
+                    <!-- Hình SVG khí quản kích ứng ho -->
+                    <div class="bg-indigo-50/60 px-4 py-3 border-b border-indigo-100">
+                        <svg viewBox="0 0 260 95" class="w-full h-24 mx-auto" fill="none">
+                            <path d="M90 25L140 50L90 75" stroke="#4f46e5" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M148 38C158 45 158 55 148 62" stroke="#f97316" stroke-width="3" stroke-linecap="round"/>
+                            <path d="M162 30C176 42 176 58 162 70" stroke="#f97316" stroke-width="3" stroke-linecap="round"/>
+                            <text x="182" y="48" fill="#c2410c" font-size="9.5" font-weight="bold">Ho khan ông ổng</text>
+                            <text x="182" y="60" fill="#4338ca" font-size="9.5" font-weight="bold">do viêm khí quản</text>
+                        </svg>
+                    </div>
+                    <div class="p-6 space-y-3 flex-1 flex flex-col justify-between text-xs sm:text-sm">
+                        <div class="space-y-2.5">
+                            <p class="text-slate-600"><strong class="text-slate-800">🩺 Triệu chứng:</strong> Cơn ho khan từng tràng dài như tiếng ngỗng kêu, kèm nôn khan ra bọt trắng, chảy nước mũi nhẹ, dễ lây ở nơi nuôi nhốt tập trung.</p>
+                        </div>
+                        <div class="bg-indigo-50 p-3.5 rounded-2xl border border-indigo-100 text-xs">
+                            <strong class="text-indigo-900">🛡️ Phòng trị:</strong> Tiêm vắc-xin phòng bệnh hô hấp chó (KC), cách ly thú bệnh và giữ môi trường sống sạch sẽ, thoáng mát.
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Bệnh ĐV 5: Hen suyễn dị ứng ở mèo -->
+                <article data-category="mammal" class="animal-card bg-white rounded-3xl overflow-hidden border border-slate-200/80 shadow-sm hover:shadow-xl transition-all flex flex-col">
+                    <div class="bg-gradient-to-r from-purple-600 to-indigo-600 p-5 text-white">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="px-3 py-1 rounded-full bg-white/20 text-xs font-semibold">🐈 Thú Cưng (Mèo)</span>
+                            <span class="text-xs font-bold bg-amber-400/30 px-2.5 py-0.5 rounded-lg">Dị ứng mạn tính</span>
+                        </div>
+                        <h3 class="text-lg font-extrabold">5. Bệnh Hen Suyễn Ở Mèo</h3>
+                        <p class="text-purple-100 text-xs mt-0.5">Tác nhân: Dị nguyên bụi cát, khói thuốc, phấn hoa</p>
+                    </div>
+                    <!-- Hình SVG phế quản co thắt -->
+                    <div class="bg-purple-50/60 px-4 py-3 border-b border-purple-100">
+                        <svg viewBox="0 0 260 95" class="w-full h-24 mx-auto" fill="none">
+                            <!-- Phế quản bình thường vs co thắt -->
+                            <circle cx="80" cy="48" r="24" fill="#ddd6fe" stroke="#7c3aed" stroke-width="2.5"/>
+                            <circle cx="80" cy="48" r="14" fill="#ffffff"/>
+                            <text x="48" y="85" fill="#5b21b6" font-size="9.5" font-weight="bold">Phế quản mở</text>
+
+                            <circle cx="180" cy="48" r="24" fill="#fecaca" stroke="#dc2626" stroke-width="2.5"/>
+                            <circle cx="180" cy="48" r="5" fill="#ffffff"/>
+                            <text x="142" y="85" fill="#b91c1c" font-size="9.5" font-weight="bold">Co thắt hẹp đường thở</text>
+                        </svg>
+                    </div>
+                    <div class="p-6 space-y-3 flex-1 flex flex-col justify-between text-xs sm:text-sm">
+                        <div class="space-y-2.5">
+                            <p class="text-slate-600"><strong class="text-slate-800">🩺 Triệu chứng:</strong> Mèo cúi thấp người sát sàn, duỗi thẳng cổ để ho khò khè (giống như đang cố khạc búi lông), thở nhanh và há miệng khi lên cơn.</p>
+                        </div>
+                        <div class="bg-purple-50 p-3.5 rounded-2xl border border-purple-100 text-xs">
+                            <strong class="text-purple-900">🛡️ Phòng trị:</strong> Dùng cát vệ sinh không bụi, tuyệt đối tránh khói thuốc lá/nước hoa xịt phòng và sử dụng bình xịt giãn phế quản theo đơn thú y.
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Bệnh ĐV 6: Bệnh thối mang & xuất huyết mang ở cá -->
+                <article data-category="aquatic" class="animal-card bg-white rounded-3xl overflow-hidden border border-slate-200/80 shadow-sm hover:shadow-xl transition-all flex flex-col">
+                    <div class="bg-gradient-to-r from-cyan-600 to-air-600 p-5 text-white">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="px-3 py-1 rounded-full bg-white/20 text-xs font-semibold">🐟 Thủy Sản (Cá Nước Ngọt & Mặn)</span>
+                            <span class="text-xs font-bold bg-orange-500/90 px-2.5 py-0.5 rounded-lg">Ký sinh & Vi khuẩn</span>
+                        </div>
+                        <h3 class="text-lg font-extrabold">6. Bệnh Thối Mang & Xuất Huyết Mang</h3>
+                        <p class="text-cyan-100 text-xs mt-0.5">Tác nhân: <em>Flavobacterium</em> / Sán lá mang</p>
+                    </div>
+                    <!-- Hình SVG cung mang cá bị hoại tử -->
+                    <div class="bg-cyan-50/70 px-4 py-3 border-b border-cyan-100">
+                        <svg viewBox="0 0 260 95" class="w-full h-24 mx-auto" fill="none">
+                            <!-- Cung mang cá và các tia mang -->
+                            <path d="M60 22C95 22 115 48 115 78" stroke="#0891b2" stroke-width="5" stroke-linecap="round"/>
+                            <path d="M88 30L125 25M98 42L135 38M106 55L142 52M112 68L145 68" stroke="#ef4444" stroke-width="3.5" stroke-linecap="round"/>
+                            <!-- Vùng tia mang bị thối rữa mất sắc đỏ -->
+                            <path d="M132 52L146 52M134 68L148 68" stroke="#cbd5e1" stroke-width="4" stroke-linecap="round"/>
+                            <text x="152" y="45" fill="#0e7490" font-size="9.5" font-weight="bold">Tia mang tiết nhớt,</text>
+                            <text x="152" y="58" fill="#b91c1c" font-size="9.5" font-weight="bold">hoại tử giảm hấp thu O₂</text>
+                        </svg>
+                    </div>
+                    <div class="p-6 space-y-3 flex-1 flex flex-col justify-between text-xs sm:text-sm">
+                        <div class="space-y-2.5">
+                            <p class="text-slate-600"><strong class="text-slate-800">🩺 Triệu chứng:</strong> Tia mang sưng đỏ hoặc thối rữa bạc màu, tiết nhiều dịch nhớt làm giảm diện tích trao đổi O₂ hòa tan; cá nổi đầu đớp khí và bơi lờ đờ.</p>
+                        </div>
+                        <div class="bg-cyan-50 p-3.5 rounded-2xl border border-cyan-100 text-xs">
+                            <strong class="text-cyan-900">🛡️ Phòng trị:</strong> Quản lý tốt chất lượng nước ao nuôi, chạy quạt nước tăng oxy hòa tan và tắm muối/thuốc sát trùng định kỳ cho cá.
+                        </div>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+
+        <!-- ==================== MỤC 3: LỢI ÍCH THỂ THAO VỚI HÔ HẤP Ở NGƯỜI ==================== -->
+        <section id="con-nguoi" class="scroll-mt-24">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4 border-b border-teal-200 pb-6">
+                <div>
+                    <div class="inline-flex items-center space-x-2 text-teal-600 font-bold text-sm uppercase tracking-wider mb-2">
+                        <span class="w-2.5 h-2.5 rounded-full bg-teal-500"></span>
+                        <span>Chuyên Mục 03 • Sức Khỏe Con Người</span>
+                    </div>
+                    <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900">
+                        Lợi Ích Của Thể Dục Thể Thao Đối Với Hô Hấp Ở Người
+                    </h2>
+                </div>
+                <p class="text-slate-600 max-w-md text-sm sm:text-base">
+                    Vận động thường xuyên tạo ra những thích nghi sinh lý vượt trội giúp lá phổi hoạt động bền bỉ, thông khí sâu và chống lại bệnh tật.
+                </p>
+            </div>
+
+            <!-- 4 Cơ chế thích nghi khoa học -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+                <!-- Cơ chế 1 -->
+                <div class="bg-white rounded-3xl p-6 border border-slate-200/80 shadow-sm hover:border-air-400 transition-all">
+                    <div class="w-11 h-11 rounded-2xl bg-air-100 text-air-700 font-black flex items-center justify-center mb-4">01</div>
+                    <h3 class="text-lg font-bold text-slate-900 mb-2">Tăng Dung Tích Sống (VC)</h3>
+                    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                        Nhu cầu O₂ tăng cao kích thích phổi giãn nở tối đa, huy động cả những phế nang ít hoạt động ở đỉnh phổi và đẩy bớt <strong>khí cặn</strong> ra ngoài.
+                    </p>
+                </div>
+
+                <!-- Cơ chế 2 -->
+                <div class="bg-white rounded-3xl p-6 border border-slate-200/80 shadow-sm hover:border-leaf-400 transition-all">
+                    <div class="w-11 h-11 rounded-2xl bg-leaf-100 text-leaf-700 font-black flex items-center justify-center mb-4">02</div>
+                    <h3 class="text-lg font-bold text-slate-900 mb-2">Tăng Chỉ Số VO₂ Max</h3>
+                    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                        Mạng lưới mao mạch quanh hàng trăm triệu <strong>phế nang</strong> mở rộng tối đa, giúp tăng tốc độ khuếch tán O₂ vào máu và đào thải CO₂.
+                    </p>
+                </div>
+
+                <!-- Cơ chế 3 -->
+                <div class="bg-white rounded-3xl p-6 border border-slate-200/80 shadow-sm hover:border-teal-400 transition-all">
+                    <div class="w-11 h-11 rounded-2xl bg-teal-100 text-teal-700 font-black flex items-center justify-center mb-4">03</div>
+                    <h3 class="text-lg font-bold text-slate-900 mb-2">Khỏe Cơ Hoành & Liên Sườn</h3>
+                    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                        Thể thao rèn luyện sức bền cho <strong>cơ hoành</strong> và <strong>cơ liên sườn ngoài</strong>, giúp mỗi nhịp thở sâu hơn, tiết kiệm năng lượng và chống hụt hơi.
+                    </p>
+                </div>
+
+                <!-- Cơ chế 4 -->
+                <div class="bg-white rounded-3xl p-6 border border-slate-200/80 shadow-sm hover:border-sky-400 transition-all">
+                    <div class="w-11 h-11 rounded-2xl bg-sky-100 text-sky-700 font-black flex items-center justify-center mb-4">04</div>
+                    <h3 class="text-lg font-bold text-slate-900 mb-2">Làm Sạch Đường Hô Hấp</h3>
+                    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                        Luồng khí lưu thông mạnh kết hợp tăng tuần hoàn máu kích thích hệ thống <strong>lông chuyển</strong> niêm mạc đẩy bụi mịn và vi khuẩn ra khỏi phế quản.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Bảng so sánh chỉ số sinh lý hô hấp -->
+            <div class="bg-white rounded-3xl border border-slate-200/90 shadow-sm overflow-hidden mb-8">
+                <div class="bg-slate-900 text-white px-6 py-4 flex flex-wrap justify-between items-center gap-2">
+                    <h3 class="font-bold text-base sm:text-lg">📊 Bảng So Sánh Chỉ Số Hô Hấp (Trạng Thái Nghỉ Ngơi)</h3>
+                    <span class="text-xs text-slate-400">Nguồn: Sinh lý học Thể dục Thể thao</span>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse text-sm">
+                        <thead>
+                            <tr class="bg-slate-50 border-b border-slate-200 text-slate-700">
+                                <th class="py-3.5 px-5 font-bold">Chỉ số sinh lý</th>
+                                <th class="py-3.5 px-5 font-bold text-slate-500">Người ít vận động</th>
+                                <th class="py-3.5 px-5 font-bold text-leaf-700 bg-leaf-50/50">Người tập thể thao đều đặn</th>
+                                <th class="py-3.5 px-5 font-bold text-air-700">Ý nghĩa sức khỏe</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100">
+                            <tr class="hover:bg-slate-50/80">
+                                <td class="py-3.5 px-5 font-semibold text-slate-900">Nhịp thở khi nghỉ</td>
+                                <td class="py-3.5 px-5 text-slate-600">16 – 20 nhịp/phút</td>
+                                <td class="py-3.5 px-5 font-bold text-leaf-700 bg-leaf-50/30">10 – 14 nhịp/phút</td>
+                                <td class="py-3.5 px-5 text-slate-600 text-xs sm:text-sm">Thở chậm nhưng sâu, giảm gánh nặng cho tim phổi</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50/80">
+                                <td class="py-3.5 px-5 font-semibold text-slate-900">Thể tích khí lưu thông (TV)</td>
+                                <td class="py-3.5 px-5 text-slate-600">~ 450 – 500 ml</td>
+                                <td class="py-3.5 px-5 font-bold text-leaf-700 bg-leaf-50/30">600 – 800 ml</td>
+                                <td class="py-3.5 px-5 text-slate-600 text-xs sm:text-sm">Lượng khí tươi vào tận phế nang mỗi nhịp cao hơn</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50/80">
+                                <td class="py-3.5 px-5 font-semibold text-slate-900">Dung tích sống (VC)</td>
+                                <td class="py-3.5 px-5 text-slate-600">3.0 – 3.8 Lít</td>
+                                <td class="py-3.5 px-5 font-bold text-leaf-700 bg-leaf-50/30">4.5 – 6.2 Lít</td>
+                                <td class="py-3.5 px-5 text-slate-600 text-xs sm:text-sm">Dự trữ hô hấp lớn, bền bỉ khi vận động mạnh</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50/80">
+                                <td class="py-3.5 px-5 font-semibold text-slate-900">Hấp thụ Oxy tối đa (VO₂ Max)</td>
+                                <td class="py-3.5 px-5 text-slate-600">30 – 38 ml/kg/phút</td>
+                                <td class="py-3.5 px-5 font-bold text-leaf-700 bg-leaf-50/30">50 – 75+ ml/kg/phút</td>
+                                <td class="py-3.5 px-5 text-slate-600 text-xs sm:text-sm">Thước đo vàng của sức bền tim phổi và tuổi thọ</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== MỤC 4: GÓC TƯƠNG TÁC & KHÁM PHÁ ĐA DẠNG ==================== -->
+        <section id="tuong-tac" class="scroll-mt-24 pt-4">
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <span class="inline-block px-3.5 py-1 rounded-full bg-air-100 text-air-700 text-xs font-bold uppercase tracking-wider mb-2">
+                    Chuyên Mục 04 • Thực Hành & Trải Nghiệm
+                </span>
+                <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900">
+                    Góc Tương Tác & Phòng Thí Nghiệm Hô Hấp
+                </h2>
+                <p class="text-slate-600 mt-2 text-sm sm:text-base">
+                    Quan sát lá phổi hoạt động ở các cường độ vận động khác nhau, ước tính dung tích sống của riêng bạn và chinh phục danh hiệu Chuyên gia Hô hấp!
+                </p>
+            </div>
+
+            <!-- HÀNG 1: MÔ PHỎNG PHỔI TƯƠNG TÁC + MÁY TÍNH DUNG TÍCH SỐNG -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-10">
+                
+                <!-- CÔNG CỤ 1: MÔ PHỎNG LÁ PHỔI & NHỊP THỞ THỜI GIAN THỰC -->
+                <div id="lung-simulator" class="lg:col-span-6 bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-md flex flex-col justify-between">
+                    <div>
+                        <div class="flex flex-wrap justify-between items-center gap-2 mb-4">
+                            <span class="px-3 py-1 rounded-full bg-air-100 text-air-700 text-xs font-bold">Mô Phỏng Sinh Lý 3D/SVG</span>
+                            <span id="lung-phase-badge" class="px-3 py-1 rounded-lg bg-leaf-100 text-leaf-800 text-xs font-extrabold">
+                                Đang Hít Vào...
+                            </span>
+                        </div>
+                        <h3 class="text-xl font-extrabold text-slate-900">Mô Phỏng Phổi & Thông Khí Phút</h3>
+                        <p class="text-xs text-slate-500 mt-1">Chọn trạng thái vận động để quan sát sự co giãn của phổi và cơ hoành:</p>
+
+                        <!-- 3 Nút chọn chế độ vận động -->
+                        <div class="grid grid-cols-3 gap-2 my-5">
+                            <button type="button" data-mode="rest" class="lung-mode-btn active py-2.5 px-2 rounded-xl text-xs font-bold bg-air-600 text-white shadow-sm transition-all cursor-pointer">
+                                🛋️ Nghỉ ngơi<br><span class="font-normal opacity-90">14 nhịp/phút</span>
+                            </button>
+                            <button type="button" data-mode="run" class="lung-mode-btn py-2.5 px-2 rounded-xl text-xs font-bold bg-slate-100 text-slate-700 hover:bg-orange-50 transition-all cursor-pointer">
+                                🏃 Chạy bộ<br><span class="font-normal opacity-80">32 nhịp/phút</span>
+                            </button>
+                            <button type="button" data-mode="deep" class="lung-mode-btn py-2.5 px-2 rounded-xl text-xs font-bold bg-slate-100 text-slate-700 hover:bg-leaf-50 transition-all cursor-pointer">
+                                🧘 Thở sâu<br><span class="font-normal opacity-80">6 nhịp/phút</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Khung hiển thị SVG Lá Phổi Co Giãn -->
+                    <div class="relative bg-gradient-to-b from-slate-50 to-air-50/70 rounded-2xl border border-slate-200/80 p-4 flex flex-col items-center justify-center my-2">
+                        <svg viewBox="0 0 260 195" class="w-60 h-44 overflow-visible" fill="none">
+                            <!-- Khí quản -->
+                            <path d="M130 12V62" stroke="#0284c7" stroke-width="10" stroke-linecap="round"/>
+                            <path d="M130 12V62" stroke="#bae6fd" stroke-width="4" stroke-dasharray="4 4"/>
+                            <path d="M130 58L98 76M130 58L162 76" stroke="#0284c7" stroke-width="7" stroke-linecap="round"/>
+
+                            <!-- Nhóm 2 lá phổi co giãn động bằng JS -->
+                            <g id="svg-lungs-group" style="transform-origin: 130px 95px; transition: transform 1.8s ease-in-out;">
+                                <!-- Phổi trái -->
+                                <path d="M122 54C92 54 62 76 58 124C56 144 72 152 98 150C115 148 122 140 122 126V54Z" fill="url(#lungGrad)" stroke="#0369a1" stroke-width="2.5"/>
+                                <!-- Phổi phải -->
+                                <path d="M138 54C168 54 198 76 202 124C204 144 188 152 162 150C145 148 138 140 138 126V54Z" fill="url(#lungGrad)" stroke="#0369a1" stroke-width="2.5"/>
+                                <!-- Nhánh phế quản nhỏ bên trong -->
+                                <path d="M98 76L80 95M98 76L95 112M162 76L180 95M162 76L165 112" stroke="#ffffff" stroke-width="2" stroke-opacity="0.7" stroke-linecap="round"/>
+                            </g>
+
+                            <!-- Cơ hoành phía dưới phổi -->
+                            <path id="svg-diaphragm" d="M52 166Q130 144 208 166" stroke="#0d9488" stroke-width="5" stroke-linecap="round" style="transition: d 1.8s ease-in-out;"/>
+                            <text x="130" y="184" text-anchor="middle" fill="#0f766e" font-size="11" font-weight="bold">Cơ Hoành Nâng / Hạ Theo Nhịp</text>
+
+                            <defs>
+                                <linearGradient id="lungGrad" x1="130" y1="54" x2="130" y2="152" gradientUnits="userSpaceOnUse">
+                                    <stop stop-color="#38bdf8"/>
+                                    <stop offset="1" stop-color="#2dd4bf"/>
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                    </div>
+
+                    <!-- Bảng thông số thời gian thực -->
+                    <div class="grid grid-cols-3 gap-2.5 mt-4 text-center">
+                        <div class="p-3 rounded-2xl bg-slate-50 border border-slate-100">
+                            <span class="block text-[11px] text-slate-500">Tần số thở</span>
+                            <span id="stat-rate" class="text-base font-extrabold text-air-700">14 lần/phút</span>
+                        </div>
+                        <div class="p-3 rounded-2xl bg-slate-50 border border-slate-100">
+                            <span class="block text-[11px] text-slate-500">Khí lưu thông</span>
+                            <span id="stat-tidal" class="text-base font-extrabold text-teal-700">500 ml</span>
+                        </div>
+                        <div class="p-3 rounded-2xl bg-leaf-50 border border-leaf-100">
+                            <span class="block text-[11px] text-leaf-700 font-semibold">Thông khí phút</span>
+                            <span id="stat-minute-vent" class="text-base font-extrabold text-leaf-800">7.0 Lít/phút</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CÔNG CỤ 2: MÁY TÍNH ƯỚC TÍNH DUNG TÍCH SỐNG (VITAL CAPACITY CALCULATOR) -->
+                <div class="lg:col-span-6 bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-md flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-center mb-4">
+                            <span class="px-3 py-1 rounded-full bg-teal-100 text-teal-800 text-xs font-bold">Công Cụ Sinh Lý Học</span>
+                            <span class="text-xs font-semibold text-slate-400">Công thức Baldwin</span>
+                        </div>
+                        <h3 class="text-xl font-extrabold text-slate-900">Ước Tính Dung Tích Sống Của Bạn</h3>
+                        <p class="text-xs text-slate-500 mt-1 mb-5">Nhập các chỉ số cơ thể để ước tính thể tích khí tối đa lá phổi của bạn có thể chứa:</p>
+
+                        <form id="vc-calc-form" class="space-y-4">
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-700 mb-1.5">Giới tính sinh học</label>
+                                    <select id="vc-gender" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-sm font-medium focus:outline-none focus:border-air-500">
+                                        <option value="male">Nam giới</option>
+                                        <option value="female">Nữ giới</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-700 mb-1.5">Độ tuổi (năm)</label>
+                                    <input type="number" id="vc-age" min="10" max="90" value="18" required class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-sm font-medium focus:outline-none focus:border-air-500">
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-700 mb-1.5">Chiều cao (cm)</label>
+                                    <input type="number" id="vc-height" min="120" max="220" value="168" required class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-sm font-medium focus:outline-none focus:border-air-500">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-700 mb-1.5">Thói quen thể thao</label>
+                                    <select id="vc-activity" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-sm font-medium focus:outline-none focus:border-air-500">
+                                        <option value="1.0">Ít vận động</option>
+                                        <option value="1.12" selected>Tập đều đặn (3-4 buổi/tuần)</option>
+                                        <option value="1.25">Vận động viên / Bơi lội chuyên sâu</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="w-full py-3.5 px-5 rounded-xl font-bold text-white bg-gradient-to-r from-teal-600 to-air-600 hover:from-teal-700 hover:to-air-700 shadow-md transition-all cursor-pointer">
+                                🧮 Tính Dung Tích Sống Ngay
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Kết quả tính toán hiển thị trực quan -->
+                    <div id="vc-result-box" class="mt-6 p-5 rounded-2xl bg-gradient-to-br from-air-50 to-leaf-50 border border-air-200">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Dung tích sống ước tính:</span>
+                            <span id="vc-liters-badge" class="px-2.5 py-0.5 rounded-lg bg-leaf-600 text-white text-xs font-bold">4.45 Lít</span>
+                        </div>
+                        <div class="text-3xl font-black text-slate-900 mb-2">
+                            <span id="vc-ml-value">4,450</span> <span class="text-base font-bold text-slate-500">ml khí</span>
+                        </div>
+                        <p id="vc-advice-text" class="text-xs text-slate-700 leading-relaxed">
+                            💡 <strong>Đánh giá:</strong> Chỉ số hô hấp của bạn rất tốt! Hãy duy trì các bài tập bơi lội hoặc chạy bộ bền để giữ độ đàn hồi tối ưu cho phế nang.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- HÀNG 2: MINI-QUIZ 6 CÂU HỎI XẾP HẠNG DANH HIỆU -->
+            <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-md">
+                <div class="flex flex-wrap justify-between items-center gap-3 mb-6 pb-4 border-b border-slate-100">
+                    <div>
+                        <span class="inline-block px-2.5 py-0.5 rounded-md bg-orange-100 text-orange-700 text-xs font-bold mb-1">Thử Thách Kiến Thức</span>
+                        <h3 class="text-xl sm:text-2xl font-extrabold text-slate-900">Mini-Quiz: Chuyên Gia Hô Hấp</h3>
+                        <p class="text-xs sm:text-sm text-slate-500 mt-0.5">Hoàn thành 6 câu hỏi bao quát Thực vật, Động vật và Con người để nhận danh hiệu!</p>
+                    </div>
+                    <div id="quiz-score-box" class="hidden px-4 py-2 rounded-2xl bg-leaf-100 text-leaf-900 font-extrabold text-sm border border-leaf-300">
+                        Kết quả: <span id="quiz-score-value">0</span>/6 • <span id="quiz-rank-badge" class="text-air-700"></span>
+                    </div>
+                </div>
+
+                <form id="quiz-form" class="space-y-6">
+                    <div id="quiz-questions-container" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
+
+                    <div id="quiz-warning" class="hidden p-3.5 rounded-xl bg-amber-50 border border-amber-200 text-amber-800 text-sm font-medium">
+                        ⚠️ Bạn vui lòng chọn đáp án cho tất cả 6 câu hỏi trước khi nộp bài nhé!
+                    </div>
+
+                    <div class="flex flex-wrap gap-3 pt-2">
+                        <button type="submit" id="btn-submit-quiz" class="px-7 py-3.5 rounded-xl font-bold text-white bg-gradient-to-r from-air-600 to-leaf-600 hover:from-air-700 hover:to-leaf-700 shadow-md transition-all cursor-pointer">
+                            ✅ Nộp Bài & Nhận Danh Hiệu
+                        </button>
+                        <button type="button" id="btn-reset-quiz" class="hidden px-6 py-3.5 rounded-xl font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 transition-all cursor-pointer">
+                            🔄 Làm Lại Bài Quiz
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ==================== CHÂN TRANG (FOOTER) ==================== -->
+    <footer class="bg-slate-900 text-slate-300 mt-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6 border-b border-slate-800 pb-8">
+                <div class="flex items-center space-x-3">
+                    <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-air-500 to-leaf-500 flex items-center justify-center text-white font-bold">
+                        O₂
+                    </div>
+                    <span class="font-bold text-lg text-white">Hô Hấp & Sự Sống</span>
+                </div>
+                <div class="flex flex-wrap justify-center gap-6 text-sm">
+                    <a href="#thuc-vat" class="hover:text-leaf-400 transition-colors">Bệnh lý Thực vật</a>
+                    <a href="#dong-vat" class="hover:text-air-400 transition-colors">Bệnh lý Động vật</a>
+                    <a href="#con-nguoi" class="hover:text-teal-400 transition-colors">Thể thao & Hô hấp</a>
+                    <a href="#tuong-tac" class="hover:text-white transition-colors">Mô phỏng Phổi & Quiz</a>
+                </div>
+            </div>
+            <div class="pt-6 text-center text-xs text-slate-500">
+                © 2026 Dự Án Giáo Dục Sinh Học Trực Quan — Bảo vệ bầu không khí sạch là bảo vệ sự sống của muôn loài.
+            </div>
+        </div>
+    </footer>
+
+    <!-- ==================== MÃ JAVASCRIPT TƯƠNG TÁC ==================== -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            /* -----------------------------------------------------------
+               1. XỬ LÝ MENU TRÊN THIẾT BỊ DI ĐỘNG (MOBILE NAVBAR)
+               ----------------------------------------------------------- */
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const iconOpen = document.getElementById('menu-icon-open');
+            const iconClose = document.getElementById('menu-icon-close');
+            const mobileLinks = document.querySelectorAll('.mobile-link');
+
+            function toggleMobileMenu() {
+                const isHidden = mobileMenu.classList.contains('hidden');
+                if (isHidden) {
+                    mobileMenu.classList.remove('hidden');
+                    iconOpen.classList.add('hidden');
+                    iconClose.classList.remove('hidden');
+                } else {
+                    mobileMenu.classList.add('hidden');
+                    iconOpen.classList.remove('hidden');
+                    iconClose.classList.add('hidden');
+                }
+            }
+
+            mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    if (!mobileMenu.classList.contains('hidden')) {
+                        toggleMobileMenu();
+                    }
+                });
+            });
+
+
+            /* -----------------------------------------------------------
+               2. BỘ LỌC PHÂN NHÓM BỆNH LÝ ĐỘNG VẬT
+               ----------------------------------------------------------- */
+            const filterButtons = document.querySelectorAll('.animal-filter-btn');
+            const animalCards = document.querySelectorAll('.animal-card');
+
+            filterButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const selectedFilter = btn.getAttribute('data-filter');
+
+                    // Cập nhật trạng thái nút active
+                    filterButtons.forEach(b => {
+                        b.className = 'animal-filter-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-white text-slate-700 border border-slate-200 hover:border-air-400 transition-all cursor-pointer';
+                    });
+                    btn.className = 'animal-filter-btn active px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-air-600 text-white shadow-sm transition-all cursor-pointer';
+
+                    // Hiển thị thẻ phù hợp
+                    animalCards.forEach(card => {
+                        const category = card.getAttribute('data-category');
+                        if (selectedFilter === 'all' || category === selectedFilter) {
+                            card.classList.remove('hidden');
+                        } else {
+                            card.classList.add('hidden');
+                        }
+                    });
+                });
+            });
+
+
+            /* -----------------------------------------------------------
+               3. MÔ PHỎNG PHỔI & NHỊP THỞ THỜI GIAN THỰC (LUNG SIMULATOR)
+               ----------------------------------------------------------- */
+            const lungModeBtns = document.querySelectorAll('.lung-mode-btn');
+            const svgLungsGroup = document.getElementById('svg-lungs-group');
+            const svgDiaphragm = document.getElementById('svg-diaphragm');
+            const lungPhaseBadge = document.getElementById('lung-phase-badge');
+            const statRate = document.getElementById('stat-rate');
+            const statTidal = document.getElementById('stat-tidal');
+            const statMinuteVent = document.getElementById('stat-minute-vent');
+
+            const lungModes = {
+                rest: {
+                    rate: 14,
+                    tidal: 500,
+                    halfCycleMs: 2140, // ~4.28s mỗi nhịp
+                    scaleMax: 1.08
+                },
+                run: {
+                    rate: 32,
+                    tidal: 1200,
+                    halfCycleMs: 930, // ~1.86s mỗi nhịp nhanh
+                    scaleMax: 1.16
+                },
+                deep: {
+                    rate: 6,
+                    tidal: 1800,
+                    halfCycleMs: 5000, // 10s mỗi nhịp sâu
+                    scaleMax: 1.22
+                }
+            };
+
+            let currentLungMode = 'rest';
+            let isInhaling = true;
+            let lungTimer = null;
+
+            function animateLungCycle() {
+                const config = lungModes[currentLungMode];
+                const transitionSec = (config.halfCycleMs / 1000).toFixed(2);
+                svgLungsGroup.style.transition = `transform ${transitionSec}s ease-in-out`;
+
+                if (isInhaling) {
+                    // Hít vào: Phổi nở to, cơ hoành hạ phẳng xuống
+                    svgLungsGroup.style.transform = `scale(${config.scaleMax})`;
+                    svgDiaphragm.setAttribute('d', 'M48 168Q130 166 212 168');
+                    lungPhaseBadge.textContent = '🫁 Đang Hít Vào (Cơ hoành hạ)...';
+                    lungPhaseBadge.className = 'px-3 py-1 rounded-lg bg-air-100 text-air-800 text-xs font-extrabold';
+                } else {
+                    // Thở ra: Phổi thu về bình thường, cơ hoành vòm lên
+                    svgLungsGroup.style.transform = 'scale(1.0)';
+                    svgDiaphragm.setAttribute('d', 'M52 166Q130 142 208 166');
+                    lungPhaseBadge.textContent = '💨 Đang Thở Ra (Cơ hoành nâng)...';
+                    lungPhaseBadge.className = 'px-3 py-1 rounded-lg bg-leaf-100 text-leaf-800 text-xs font-extrabold';
+                }
+                isInhaling = !isInhaling;
+            }
+
+            function setLungMode(modeKey) {
+                currentLungMode = modeKey;
+                const config = lungModes[modeKey];
+
+                // Cập nhật thông số sinh lý
+                statRate.textContent = `${config.rate} lần/phút`;
+                statTidal.textContent = `${config.tidal} ml`;
+                const minuteLiters = ((config.rate * config.tidal) / 1000).toFixed(1);
+                statMinuteVent.textContent = `${minuteLiters} Lít/phút`;
+
+                // Khởi động lại vòng lặp mô phỏng theo tốc độ mới
+                if (lungTimer) clearInterval(lungTimer);
+                isInhaling = true;
+                animateLungCycle();
+                lungTimer = setInterval(animateLungCycle, config.halfCycleMs);
+            }
+
+            lungModeBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const mode = btn.getAttribute('data-mode');
+                    lungModeBtns.forEach(b => {
+                        b.className = 'lung-mode-btn py-2.5 px-2 rounded-xl text-xs font-bold bg-slate-100 text-slate-700 hover:bg-air-50 transition-all cursor-pointer';
+                    });
+                    btn.className = 'lung-mode-btn active py-2.5 px-2 rounded-xl text-xs font-bold bg-air-600 text-white shadow-sm transition-all cursor-pointer';
+                    setLungMode(mode);
+                });
+            });
+
+            // Khởi chạy mô phỏng phổi ngay khi mở trang
+            setLungMode('rest');
+
+
+            /* -----------------------------------------------------------
+               4. CÔNG CỤ ƯỚC TÍNH DUNG TÍCH SỐNG (VITAL CAPACITY CALCULATOR)
+               ----------------------------------------------------------- */
+            const vcForm = document.getElementById('vc-calc-form');
+            const vcMlValue = document.getElementById('vc-ml-value');
+            const vcLitersBadge = document.getElementById('vc-liters-badge');
+            const vcAdviceText = document.getElementById('vc-advice-text');
+
+            vcForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const gender = document.getElementById('vc-gender').value;
+                const age = parseFloat(document.getElementById('vc-age').value) || 20;
+                const height = parseFloat(document.getElementById('vc-height').value) || 165;
+                const activityFactor = parseFloat(document.getElementById('vc-activity').value) || 1.0;
+
+                // Công thức Baldwin ước tính Dung tích sống (ml)
+                let baseVC = 0;
+                if (gender === 'male') {
+                    baseVC = (27.63 - 0.112 * age) * height;
+                } else {
+                    baseVC = (21.78 - 0.101 * age) * height;
+                }
+
+                const estimatedVC = Math.round(baseVC * activityFactor);
+                const liters = (estimatedVC / 1000).toFixed(2);
+
+                vcMlValue.textContent = estimatedVC.toLocaleString('vi-VN');
+                vcLitersBadge.textContent = `${liters} Lít`;
+
+                if (activityFactor === 1.0) {
+                    vcAdviceText.innerHTML = `💡 <strong>Lời khuyên:</strong> Bạn đang ở mức nền cơ bản. Nếu tập bơi lội hoặc chạy bộ 30 phút/ngày, dung tích sống của bạn có thể tăng thêm <strong>12% – 20%</strong>!`;
+                } else if (activityFactor === 1.12) {
+                    vcAdviceText.innerHTML = `🌟 <strong>Đánh giá:</strong> Rất tuyệt! Thói quen tập luyện giúp phổi bạn thông khí hiệu quả hơn hẳn người ít vận động.`;
+                } else {
+                    vcAdviceText.innerHTML = `🏆 <strong>Xuất sắc:</strong> Lá phổi của bạn đạt hiệu suất vận động viên! Hãy duy trì hít thở sâu và kiểm tra chất lượng không khí trước khi tập ngoài trời.`;
+                }
+            });
+
+
+            /* -----------------------------------------------------------
+               5. MINI-QUIZ TRẮC NGHIỆM 6 CÂU HỎI XẾP HẠNG DANH HIỆU
+               ----------------------------------------------------------- */
+            const quizData = [
+                {
+                    question: "Câu 1: Khi cây trồng bị ngập úng nước lâu ngày, hiện tượng gì xảy ra ở hệ rễ làm cây bị chết?",
+                    options: [
+                        "Rễ cây quang hợp quá mức gây cháy lá",
+                        "Rễ thiếu O₂ chuyển sang hô hấp kỵ khí sinh độc tố ethanol làm thối lông hút",
+                        "Khí khổng ở rễ mở quá to làm mất hết nước",
+                        "Rễ hấp thụ quá nhiều khí nitơ gây ngộ độc"
+                    ],
+                    correctIndex: 1,
+                    explanation: "Nước lấp đầy khe đất khiến rễ thiếu oxy. Cây hô hấp kỵ khí tạo ra rượu ethanol và axit lactic gây độc, làm chết lông hút."
+                },
+                {
+                    question: "Câu 2: Bệnh thối nhũn vi khuẩn trên củ/quả bảo quản làm đống nông sản nóng lên do nguyên nhân nào?",
+                    options: [
+                        "Vi khuẩn kích thích cường độ hô hấp tăng vọt, giải phóng nhiều nhiệt năng",
+                        "Củ quả tự thực hiện quang hợp trong bóng tối",
+                        "Khí khổng trên vỏ củ hút ánh sáng mặt trời",
+                        "Nước trong củ đóng băng tỏa nhiệt"
+                    ],
+                    correctIndex: 0,
+                    explanation: "Vi khuẩn Erwinia carotovora phá hủy mô tế bào và kích thích hô hấp tăng đột biến, làm nông sản sinh nhiệt mạnh và thối nhũn."
+                },
+                {
+                    question: "Câu 3: Tác nhân chính gây bệnh hô hấp mãn tính (CRD) phổ biến ở gia cầm (gà, vịt) là gì?",
+                    options: [
+                        "Vi khuẩn Mycoplasma gallisepticum",
+                        "Nấm gỉ sắt Puccinia",
+                        "Giun đũa ký sinh ở ruột non",
+                        "Thiếu ánh sáng mặt trời"
+                    ],
+                    correctIndex: 0,
+                    explanation: "Bệnh CRD ở gia cầm do vi khuẩn Mycoplasma gallisepticum gây viêm đục túi khí, khò khè và sưng mặt."
+                },
+                {
+                    question: "Câu 4: Bệnh thối mang và xuất huyết mang ở cá làm cá nổi đầu đớp khí vì lý do gì?",
+                    options: [
+                        "Cá muốn lên mặt nước để sưởi nắng",
+                        "Tia mang bị hoại tử, tiết nhiều nhớt làm giảm mạnh diện tích trao đổi O₂ hòa tan",
+                        "Bong bóng cá bị phình to quá mức",
+                        "Nước ao có quá nhiều khí oxy"
+                    ],
+                    correctIndex: 1,
+                    explanation: "Mang là cơ quan hô hấp của cá. Khi tia mang bị vi khuẩn/ký sinh trùng phá hủy và phủ dịch nhớt, cá không hấp thụ đủ oxy hòa tan trong nước."
+                },
+                {
+                    question: "Câu 5: Khi hít vào sâu trong lúc tập thể dục, cơ hoành của con người thay đổi như thế nào?",
+                    options: [
+                        "Cơ hoành co lại và hạ thấp xuống làm tăng thể tích lồng ngực",
+                        "Cơ hoành giãn ra và đẩy vòm lên sát xương đòn",
+                        "Cơ hoành đứng yên hoàn toàn",
+                        "Cơ hoành ép chặt hai lá phổi lại"
+                    ],
+                    correctIndex: 0,
+                    explanation: "Khi hít vào, cơ hoành co và hạ phẳng xuống kết hợp cơ liên sườn nâng xương sườn lên, giúp lồng ngực giãn rộng tối đa."
+                },
+                {
+                    question: "Câu 6: Chỉ số VO₂ Max tăng cao ở người thường xuyên tập thể thao mang lại ý nghĩa gì?",
+                    options: [
+                        "Khả năng hấp thụ và sử dụng oxy tối đa của cơ thể vượt trội, tăng sức bền tim phổi",
+                        "Giảm lượng hồng cầu trong máu",
+                        "Làm phổi ngừng trao đổi khí khi ngủ",
+                        "Tăng lượng khí cặn ứ đọng trong phế nang"
+                    ],
+                    correctIndex: 0,
+                    explanation: "VO₂ Max là thước đo vàng đánh giá sức bền tim phổi và hiệu suất khuếch tán oxy tại các phế nang."
+                }
+            ];
+
+            const questionsContainer = document.getElementById('quiz-questions-container');
+            const quizForm = document.getElementById('quiz-form');
+            const quizWarning = document.getElementById('quiz-warning');
+            const quizScoreBox = document.getElementById('quiz-score-box');
+            const quizScoreValue = document.getElementById('quiz-score-value');
+            const quizRankBadge = document.getElementById('quiz-rank-badge');
+            const btnSubmitQuiz = document.getElementById('btn-submit-quiz');
+            const btnResetQuiz = document.getElementById('btn-reset-quiz');
+
+            function renderQuiz() {
+                questionsContainer.innerHTML = '';
+                quizData.forEach((item, qIndex) => {
+                    const qCard = document.createElement('div');
+                    qCard.className = 'p-5 rounded-2xl bg-slate-50 border border-slate-200/80 transition-all flex flex-col justify-between';
+                    qCard.id = `q-card-${qIndex}`;
+
+                    let optionsHTML = '';
+                    item.options.forEach((optText, optIndex) => {
+                        optionsHTML += `
+                            <label id="label-${qIndex}-${optIndex}" class="flex items-start gap-3 p-3 rounded-xl bg-white border border-slate-200 hover:border-air-400 cursor-pointer transition-all">
+                                <input type="radio" name="question-${qIndex}" value="${optIndex}" class="mt-1 w-4 h-4 text-air-600 focus:ring-air-500">
+                                <span class="text-xs sm:text-sm text-slate-700 leading-snug">${optText}</span>
+                            </label>
+                        `;
+                    });
+
+                    qCard.innerHTML = `
+                        <div>
+                            <p class="font-bold text-slate-900 text-sm sm:text-base mb-3.5">${item.question}</p>
+                            <div class="space-y-2">${optionsHTML}</div>
+                        </div>
+                        <div id="explanation-${qIndex}" class="hidden mt-3.5 p-3 rounded-xl text-xs leading-relaxed"></div>
+                    `;
+                    questionsContainer.appendChild(qCard);
+                });
+            }
+
+            renderQuiz();
+
+            quizForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                quizWarning.classList.add('hidden');
+
+                const userAnswers = [];
+                for (let i = 0; i < quizData.length; i++) {
+                    const selected = document.querySelector(`input[name="question-${i}"]:checked`);
+                    if (!selected) {
+                        quizWarning.classList.remove('hidden');
+                        return;
+                    }
+                    userAnswers.push(parseInt(selected.value, 10));
+                }
+
+                let score = 0;
+                quizData.forEach((item, qIndex) => {
+                    const userChoice = userAnswers[qIndex];
+                    const isCorrect = userChoice === item.correctIndex;
+                    if (isCorrect) score++;
+
+                    const explanationEl = document.getElementById(`explanation-${qIndex}`);
+                    const qCard = document.getElementById(`q-card-${qIndex}`);
+
+                    const radios = document.querySelectorAll(`input[name="question-${qIndex}"]`);
+                    radios.forEach(r => r.disabled = true);
+
+                    const correctLabel = document.getElementById(`label-${qIndex}-${item.correctIndex}`);
+                    correctLabel.classList.remove('bg-white', 'border-slate-200');
+                    correctLabel.classList.add('bg-leaf-50', 'border-leaf-500', 'ring-1', 'ring-leaf-500', 'font-semibold');
+
+                    if (!isCorrect) {
+                        const wrongLabel = document.getElementById(`label-${qIndex}-${userChoice}`);
+                        wrongLabel.classList.remove('bg-white', 'border-slate-200');
+                        wrongLabel.classList.add('bg-red-50', 'border-red-400', 'text-red-800');
+                        qCard.classList.add('border-red-200');
+                        explanationEl.className = 'mt-3.5 p-3 rounded-xl text-xs leading-relaxed bg-red-50 text-red-900 border border-red-200';
+                        explanationEl.innerHTML = `❌ <strong>Chưa chính xác!</strong> ${item.explanation}`;
+                    } else {
+                        qCard.classList.add('border-leaf-300');
+                        explanationEl.className = 'mt-3.5 p-3 rounded-xl text-xs leading-relaxed bg-leaf-50 text-leaf-900 border border-leaf-200';
+                        explanationEl.innerHTML = `✅ <strong>Chính xác!</strong> ${item.explanation}`;
+                    }
+                });
+
+                // Xếp hạng danh hiệu
+                let rankTitle = 'Nhà Thám Hiểm Sinh Học 🌱';
+                if (score === 6) {
+                    rankTitle = 'Giáo Sư Hô Hấp Học 🏆';
+                } else if (score >= 4) {
+                    rankTitle = 'Chuyên Gia Hô Hấp 🎓';
+                }
+
+                quizScoreValue.textContent = score;
+                quizRankBadge.textContent = rankTitle;
+                quizScoreBox.classList.remove('hidden');
+                btnSubmitQuiz.classList.add('hidden');
+                btnResetQuiz.classList.remove('hidden');
+            });
+
+            btnResetQuiz.addEventListener('click', () => {
+                quizScoreBox.classList.add('hidden');
+                quizWarning.classList.add('hidden');
+                btnResetQuiz.classList.add('hidden');
+                btnSubmitQuiz.classList.remove('hidden');
+                renderQuiz();
+            });
+        });
+    </script>
+</body>
+</html>
